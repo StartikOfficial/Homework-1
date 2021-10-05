@@ -183,7 +183,7 @@ app.delete("/image/:id", (req, res) => {
   const images = db.filter(i => i.id !== id);
   writeDatabase({images}, DB);
   fs.unlinkSync(`./uploads/${id}.jpg`);
-  return res.status(200).contentType("application/json").sendFile('./Database.json');
+  return res.status(200).contentType("application/json").send(db.images);
 })
 
 app.get(`/merge`, (req, res) => {
