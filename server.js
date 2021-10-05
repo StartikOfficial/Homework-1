@@ -4,7 +4,6 @@ const path = require("path");
 const fs = require("fs");
 
 const express = require("express");
-const axios = require('axios');
 
 const {nanoid} = require('nanoid');
 const {replaceBackground} = require('backrem');
@@ -121,7 +120,7 @@ const findImageById = (id) => {
 
 app.post(
   "/upload",
-  upload.single("file" /* html attribute name of form */),
+  upload.single("image" /* html attribute name of form */),
   (req, res) => {
     const tempPath = req.file.path;
     console.log(tempPath);
@@ -136,18 +135,7 @@ app.post(
             "uploadAt": Date.now(),
             "size": fs.statSync(`./uploads/${id}.jpg`).size,
         };
-        // var data = fs.readFile('./Database.json');
-        // var myObject = JSON.parse(data);
-        // myObject.push(img);
-        // var newData2 = JSON.stringify(imgData, null, 2);
-        // // console.log(myObject)
-        // fs.writeFile('./Database.json', newData2, err => {
-        //     if (err) {
-        //         console.log('Error writing file', err)
-        //     } else {
-        //         console.log('Successfully wrote file')
-        //     }
-        // });
+
         const imagesList = readDatabase(DB);
         const newImageList = addImgToDatabase(imagesList, imgData)
         console.log(newImageList);
