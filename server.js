@@ -31,7 +31,7 @@ const handleError = (err, res) => {
 };
 
 const upload = multer({
-  dest: "./public"
+  dest: "./uploads"
 });
 
 const DB = './Database.json';
@@ -153,7 +153,7 @@ app.post(
         console.log(newImageList);
         writeDatabase(newImageList, DB);
         res
-          .send(id)
+          .send(imgData)
           .status(200);
       });
     } else {
@@ -182,12 +182,12 @@ app.get("/list", function(req, res) {
 //   {const dw = await downloadImage(`./uploads/${id}.jpg`, `${id}.jpg`).then(res.send(dw))};
 // });
 
-app.get("/image:id", (req, res) => {
+app.get("/image/:id", (req, res) => {
   // displayImageById(DB, `${req.params.id}`.substring(1));
   dwImg(req, res);
 })
 
-app.delete("/image:id", (req, res) => {
+app.delete("/image/:id", (req, res) => {
   const db = readDatabase(DB).images;
   const id = `${req.params.id}`.substring(1);
   const findedImage = findImageById(id);
