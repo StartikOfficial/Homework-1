@@ -195,7 +195,7 @@ app.get(`/merge`, (req, res) => {
   const treshold = req.query.treshold ? parseInt(req.query.treshold) : 0;
 
   if (!findImageById(front) || !findImageById(back)) return res.status(404).end('Images not found');
-  if (findImageById(front).size !== findImageById(back).size) return res.status(400).end('Bad query');
+  // if (findImageById(front).size !== findImageById(back).size) return res.status(400).end('Bad query');
 
   const frontImage = fs.createReadStream(`./uploads/${front}.jpg`);
   const backImage = fs.createReadStream(`./uploads/${back}.jpg`);
@@ -206,10 +206,9 @@ app.get(`/merge`, (req, res) => {
     const resultPass = path.resolve(`./uploads/result.jpg`);
     const writableStream = fs.createWriteStream(resultPass);
     readableStream.pipe(writableStream);
-    readableStream.on('end', () => {res.status(200);
-      res.contentType("image/jpg");
-      res.sendFile(resultPass);
-      return res.download(resultPass);
+    readableStream.on('end', () => {return res.status(200)
+      .contentType("image/jpg")
+      .download(resultPass);
   })
    });
 
