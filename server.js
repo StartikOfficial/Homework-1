@@ -202,11 +202,14 @@ app.get(`/merge`, (req, res) => {
 
   replaceBackground(frontImage, backImage, color, treshold)
   .then((readableStream) => {
-    const resultPass = path.resolve('./uploads/result.jpg');
+    // const id = nanoid(8);
+    const resultPass = path.resolve(`./uploads/result.jpg`);
     const writableStream = fs.createWriteStream(resultPass);
     readableStream.pipe(writableStream);
-    readableStream.on('end', () => {res.contentType("image/jpg");
-      return res.sendFile(resultPass);
+    readableStream.on('end', () => {res.status(200);
+      res.contentType("image/jpg");
+      res.sendFile(resultPass);
+      return res.download(resultPass);
   })
    });
 
