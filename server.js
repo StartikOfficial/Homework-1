@@ -94,7 +94,7 @@ const findImageById = (id) => {
 
   const dwImg = async (req, res, next) => {
     try {
-      const filename = `${req.params.id}.jpg`.substring(1);
+      const filename = `${req.params.id}.jpg`;
       console.log(filename);
   
       // if (!filename || filename.includes('.jpg') === false) {
@@ -164,20 +164,20 @@ app.get("/list", function(req, res) {
 })
 
 // app.get("/image:id", (req, res) => {
-//   const id = req.params.id.substring(1);
+//   const id = req.params.id;
 //   console.log(id);
 //   async () =>
 //   {const dw = await downloadImage(`./uploads/${id}.jpg`, `${id}.jpg`).then(res.send(dw))};
 // });
 
 app.get("/image/:id", (req, res) => {
-  // displayImageById(DB, `${req.params.id}`.substring(1));
+  // displayImageById(DB, `${req.params.id}`);
   dwImg(req, res);
 })
 
 app.delete("/image/:id", (req, res) => {
   const db = readDatabase(DB).images;
-  const id = `${req.params.id}`.substring(1);
+  const id = req.params.id;
   const findedImage = findImageById(id);
   if (!findedImage) {return res.status(404).end("Id not found")};
   const images = db.filter(i => i.id !== id);
